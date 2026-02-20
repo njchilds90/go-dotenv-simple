@@ -15,7 +15,7 @@ GitHub: https://github.com/njchilds90/go-dotenv-simple
 ## Install
 
 ```bash
-go get github.com/njchilds90/go-dotenv-simple/dotenv
+go get github.com/njchilds90/go-dotenv-simple/dotenv@v0.1.0
 ```
 
 ---
