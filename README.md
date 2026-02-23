@@ -1,134 +1,83 @@
-# go-dotenv-simple
+# go-dotenv
 
-A tiny, dependency-free `.env` loader for Go.
+[![Go Reference](https://pkg.go.dev/badge/github.com/njchilds90/go-dotenv.svg)](https://pkg.go.dev/github.com/njchilds90/go-dotenv)
+[![Go Report Card](https://goreportcard.com/badge/github.com/njchilds90/go-dotenv)](https://goreportcard.com/report/github.com/njchilds90/go-dotenv)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Inspired by Python dotenv. Designed to be:
-- Simple for humans
-- Predictable for AI agents
-- Zero dependencies
-- Easy to audit
+A zero-dependency `.env` file loader for Go with typed getters, validation, and multi-file support.
 
-GitHub: https://github.com/njchilds90/go-dotenv-simple
+## Features
 
----
+- Load one or many `.env` files
+- Typed getters: `GetString`, `GetInt`, `GetBool`, `GetDuration`
+- Default values and required-key validation
+- Expand `${VAR}` references within values
+- Does **not** overwrite existing environment variables (safe for production)
+- Zero external dependencies
 
 ## Install
-
 ```bash
-go get github.com/njchilds90/go-dotenv-simple/dotenv@v0.1.0
+go get github.com/njchilds90/go-dotenv
 ```
 
----
-
-## Quick Example
-
+## Quick Start
 ```go
 package main
 
 import (
-	"fmt"
-	"log"
-
-	"github.com/njchilds90/go-dotenv-simple/dotenv"
+    "fmt"
+    "github.com/njchilds90/go-dotenv"
 )
 
 func main() {
-	err := dotenv.Load(".env")
-	if err != nil {
-		log.Fatal(err)
-	}
+    dotenv.Load() // loads .env by default
 
-	fmt.Println("DB_HOST:", getenv("DB_HOST"))
+    port := dotenv.GetInt("PORT", 8080)
+    debug := dotenv.GetBool("DEBUG", false)
+    dsn := dotenv.GetString("DATABASE_URL", "")
+
+    fmt.Println(port, debug, dsn)
 }
 ```
 
----
+## API
 
-## Supported Syntax
-
-Supports common dotenv features:
-
-```
-# Comments
-FOO=bar
-
-# Quoted values
-NAME="John Doe"
-PASSWORD='abc123'
-
-# Inline comments
-PORT=8080 # dev port
-
-# export prefix
-export API_KEY=xyz
+### Loading
+```go
+dotenv.Load()                          // load .env
+dotenv.LoadFiles(".env", ".env.local") // load multiple files
+dotenv.Overload(".env")                // overwrite existing env vars
 ```
 
----
-
-## Behavior
-
-### Load(filename)
-- Loads variables from file
-- Does NOT overwrite existing environment variables
-
-### Overload(filename)
-- Loads variables
-- DOES overwrite existing environment variables
-
-### Read(filename)
-- Parses file and returns map[string]string
-- Does NOT modify environment
-
----
-
-## Error Handling
-
-Errors include:
-- File name
-- Line number
-- Reason for failure
-
-Example:
-
-```
-dotenv parse error in .env at line 4: invalid key=value format
+### Typed Getters
+```go
+dotenv.GetString("KEY", "default")
+dotenv.GetInt("PORT", 8080)
+dotenv.GetBool("DEBUG", false)
+dotenv.GetFloat("RATE", 1.0)
+dotenv.GetDuration("TIMEOUT", 30*time.Second)
 ```
 
----
-
-## When To Use
-
-✅ Local development  
-✅ CLI tools  
-✅ Small services  
-✅ AI agent tooling  
-
-⚠️ For production, prefer real environment injection via:
-- Docker
-- Kubernetes
-- CI/CD secrets
-- OS environment
-
----
-
-## Philosophy
-
-- No magic
-- No global state beyond os.Setenv
-- No reflection
-- No third-party dependencies
-- Easy to read source
-- AI agent friendly
-
----
-
-## Testing
-
-Run:
-
+### Validation
+```go
+err := dotenv.Require("DATABASE_URL", "SECRET_KEY")
+// returns error if any key is missing or empty
 ```
-go test ./...
+
+## .env File Format
+```env
+# Comments supported
+APP_NAME=my-app
+PORT=8080
+DEBUG=true
+TIMEOUT=30s
+BASE_URL=https://example.com
+CALLBACK=${BASE_URL}/callback
 ```
+
+## Contributing
+
+Pull requests welcome. Please run `go test ./...` before submitting.
 
 ---
 
