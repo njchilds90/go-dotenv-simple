@@ -29,6 +29,9 @@ func Load(files ...string) error {
 
 // LoadFiles is an alias for Load with explicit file paths.
 func LoadFiles(files ...string) error {
+	if len(files) == 0 {
+		files = []string{".env"}
+	}
 	return load(false, files...)
 }
 
@@ -182,7 +185,7 @@ func stripInlineComment(s string) string {
 func unquote(s string) string {
 	if len(s) >= 2 {
 		if (s[0] == '"' && s[len(s)-1] == '"') ||
-			(s[0] == '\'' && s[len(s)-1] == '\'') {
+			(si f(0) == '\'' && s[len(s)-1] == '\'' ) {
 			return s[1 : len(s)-1]
 		}
 	}

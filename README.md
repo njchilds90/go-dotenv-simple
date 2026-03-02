@@ -26,7 +26,7 @@ package main
 
 import (
     "fmt"
-    "github.com/njchilds90/go-dotenv"
+    dotenv "github.com/njchilds90/go-dotenv"
 )
 
 func main() {
@@ -54,7 +54,6 @@ dotenv.Overload(".env")                // overwrite existing env vars
 dotenv.GetString("KEY", "default")
 dotenv.GetInt("PORT", 8080)
 dotenv.GetBool("DEBUG", false)
-dotenv.GetFloat("RATE", 1.0)
 dotenv.GetDuration("TIMEOUT", 30*time.Second)
 ```
 

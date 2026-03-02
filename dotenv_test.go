@@ -64,10 +64,12 @@ CALLBACK=${URL}/cb
 
 func TestRequire(t *testing.T) {
 	os.Setenv("REQ_KEY", "present")
+	// Present key should not error
 	if err := Require("REQ_KEY"); err != nil {
 		t.Fatal(err)
 	}
-	if err := Require("REQ_KEY", "REQ_MISSING"); err == nil {
+	// Missing key should yield an error
+	if err := Require("REQ_MISSING"); err == nil {
 		t.Fatal("expected error for missing key")
 	}
 }
