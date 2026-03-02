@@ -13,7 +13,7 @@ func main() {
 	err := dotenv.Load(".env")
 	if err != nil {
 		fmt.Println("Error loading .env:", err)
-		return
+		os.Exit(1)
 	}
 
 	value := os.Getenv("EXAMPLE_VAR")
