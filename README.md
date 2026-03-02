@@ -17,7 +17,7 @@ A zero-dependency `.env` file loader for Go with typed getters, validation, and 
 
 ## Install
 ```bash
-go get github.com/njchilds90/go-dotenv
+go get github.com/njchilds90/go-dotenv-simple
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ package main
 
 import (
     "fmt"
-    "github.com/njchilds90/go-dotenv"
+    "github.com/njchilds90/go-dotenv-simple"
 )
 
 func main() {
@@ -54,7 +54,6 @@ dotenv.Overload(".env")                // overwrite existing env vars
 dotenv.GetString("KEY", "default")
 dotenv.GetInt("PORT", 8080)
 dotenv.GetBool("DEBUG", false)
-dotenv.GetFloat("RATE", 1.0)
 dotenv.GetDuration("TIMEOUT", 30*time.Second)
 ```
 
