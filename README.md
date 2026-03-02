@@ -17,7 +17,7 @@ A zero-dependency `.env` file loader for Go with typed getters, validation, and 
 
 ## Install
 ```bash
-go get github.com/njchilds90/go-dotenv-simple
+go get github.com/njchilds90/go-dotenv
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ package main
 
 import (
     "fmt"
-    "github.com/njchilds90/go-dotenv-simple"
+    dotenv "github.com/njchilds90/go-dotenv"
 )
 
 func main() {
